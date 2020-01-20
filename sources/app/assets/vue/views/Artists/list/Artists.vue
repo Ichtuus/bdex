@@ -13,7 +13,7 @@
     },
     async created() {
         const datas = await this.$store.dispatch('artists/updateArtistsList');
-   
+
 
     },
     methods: {
