@@ -2,3 +2,8 @@
 controllers:
     resource: '../src/Controller/'
     type:     annotation
+
+artists_get_list:
+    path: /artists/all
+    controller: App\Controller\ArtistsBundle\Controller\App\ArtistsController::getListArtists
+    methods: ['POST']
