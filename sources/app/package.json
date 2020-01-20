@@ -17,7 +17,9 @@
     "dependencies": {
         "@babel/plugin-transform-runtime": "^7.8.3",
         "@babel/runtime": "^7.8.3",
+        "axios": "^0.19.1",
         "vue": "^2.6.11",
+        "vue-axios": "^2.1.5",
         "vue-loader": "^15.8.3",
         "vue-router": "^3.1.5",
         "vue-template-compiler": "^2.6.11",
