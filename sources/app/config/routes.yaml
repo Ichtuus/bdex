@@ -3,7 +3,15 @@ controllers:
     resource: '../src/Controller/'
     type:     annotation
 
-
 ArtistsBundle:
     resource: '../src/ArtistsBundle/Controller'
     type:     annotation
+
+GroupsBundle:
+    resource: '../src/GroupsBundle/Controller'
+    type:     annotation
+
+api_login_check:
+    path: /login
+    controller: App\SecurityBundle\Controller\SecurityController::login
+    methods: ['POST']

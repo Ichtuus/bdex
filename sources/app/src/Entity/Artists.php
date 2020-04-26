@@ -11,7 +11,13 @@ use Doctrine\ORM\Mapping as ORM;
  *     collectionOperations = {
  *          "get"={
  *              "method"="GET",
- *              "path"="/artists_lists",
+ *              "path"="/artists",
+ *          },
+ *     },
+ *     itemOperations={
+ *          "get"={
+ *              "method"="GET",
+ *              "path"="/artist/{id}"
  *          },
  *     }
  * )

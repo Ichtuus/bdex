@@ -29,3 +29,11 @@ services:
     App\ArtistsBundle\:
         resource: '../src/ArtistsBundle'
         tags: ['controller.service_arguments']
+
+    App\GroupsBundle\:
+        resource: '../src/GroupsBundle'
+        tags: ['controller.service_arguments']
+
+    App\SecurityBundle\:
+        resource: '../src/SecurityBundle'
+        tags:  ['controller.service_arguments']

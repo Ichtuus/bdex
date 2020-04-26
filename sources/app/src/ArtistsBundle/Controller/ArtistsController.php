@@ -21,7 +21,7 @@ class ArtistsController extends AbstractController
     private $bboy, $countries, $years, $pages, $url;
 
     /**
-     * @Route("/artists", name="artists_list", options={"expose": true})
+     * @Route("/artists", name="artists", options={"expose": true})
      *
      */
     public function listAction() {
