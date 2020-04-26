@@ -2,30 +2,49 @@ import ArtistsApi from '../../api/artist';
 
 // state
 const state = {
-  artists: []
+  artists: [],
+  isInitialized: false,
+  errors: '',
+  page: 1,
+  filters: {
+    next: ''
+  },
 };
 
 // actions
 const actions = {
-  async updateArtistsList({commit, state}) {
-    // commit('FETCHING_BOOKS');
-    const artists = await ArtistsApi.getArtists();
-    console.log('store', artists)
-    commit('UPDATE_ARTISTS', artists);
+  async updateArtistsList({commit, state}, {url}) {
+    try {
+      const artists = await ArtistsApi.getArtists({url, param: state.page});
+      commit('ADD_PAGE');
+      return artists;
+    }catch(e) {
+      commit('SET_ERROR', e);
+      return [];
+    }
   },
 };
 
 // getters
 const getters = {
   getArtists(state) {
-  }
+    return state.artists;
+  },
+  isInitialized(state) {
+    return state.isInitialized;
+  },
 };
 
 const mutations = {
-  ['UPDATE_ARTISTS'](state, artists) {
-    state.artists = artists;
+  ['UPDATE_INITIALIZATION'](state, isInitialized){
+    state.isInitialized = isInitialized;
   },
-
+  ['SET_ERROR'](state, error) {
+    state.errors = error;
+  },
+  ['ADD_PAGE'](state) {
+    state.page += 1;
+  },
 };
 
 export default {
