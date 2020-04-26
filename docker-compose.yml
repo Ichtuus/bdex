@@ -46,9 +46,13 @@ services:
             - traefik.backend=phpmyadmin
             - traefik.frontend.rule=Host:phpmyadmin.app.localhost
         environment:
-            PMA_HOST: "mysql"
+            PMA_HOST: mysql
             PMA_USER: "$MYSQL_USER"
             PMA_PASSWORD: "$MYSQL_PASSWORD"
+        ports:
+            - 8080:80
+        links:
+            - mysql
 
 volumes:
 
