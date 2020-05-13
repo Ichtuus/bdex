@@ -2,43 +2,53 @@
 
 namespace App\SecurityBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Entity\User;
+use Symfony\Component\Config\Definition\Exception\Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\SerializerInterface;
 
 class SecurityController extends AbstractController
 {
-    /**
-     * @Route("/login", name="login", methods={"POST"})
-     */
-    public function login(Security $security, Request $request)
+
+    private $serializer;
+
+    public function __construct(SerializerInterface $serializer)
     {
-         $user = $security->getUser();
-
-         if (!$this->isGranted('IS_AUTHENTICATED_FULLY')) {
-             return $this->json([
-                 'error' => 'Invalid login request: check that the Content-Type header is "application/json".'
-             ], 400);
-         }
-
-         return $this->json([
-             'userid' => $user ? $user->getId() : null,
-             'username' => $user ? $user->getUsername() : null
-         ]);
-//        $user = $this->getUser();
-//        return $this->json([
-//            'result' => true,
-//            'username' => $user->getUsername(),
-//        ]);
+        $this->serializer = $serializer;
     }
 
     /**
-     * @Route("/logout", name="app_logout")
+     * @Route("/login", name="login")
+     * @return JsonResponse
+     */
+    public function login(): JsonResponse
+    {
+        try {
+            $user = $this->getUser();
+            $userClone = clone $user;
+            $userClone->setPassword('');
+            $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT);
+            return new JsonResponse($data, Response::HTTP_OK, [], true);
+        } catch (Exception $e) {
+            echo 'Exception: ',  $e->getMessage(), "\n";
+        }
+        return new JsonResponse([]);
+    }
+
+    /**
+     * @Route("/logout", name="logout")
      * @throws \Exception
      */
     public function logout()
     {
+//        return $this->redirectToRoute('home');
         throw new \Exception('should not be reached');
     }
+
 }

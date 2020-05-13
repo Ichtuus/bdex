@@ -11,7 +11,10 @@ GroupsBundle:
     resource: '../src/GroupsBundle/Controller'
     type:     annotation
 
-api_login_check:
+login:
     path: /login
     controller: App\SecurityBundle\Controller\SecurityController::login
     methods: ['POST']
+
+logout:
+    path: /logout

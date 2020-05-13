@@ -106,6 +106,7 @@
                         </a>
                     </div>
                 </div>
+                <login-form/>
             </div>
         </nav>
     </header>
@@ -218,48 +219,13 @@
 </template>
 
 <script>
-  import {mapState, mapActions} from 'vuex';
-  import Loading from 'vue-loading-overlay';
-  import 'vue-loading-overlay/dist/vue-loading.css';
+  import LoginForm from './views/Login/LoginForm';
+
   export default {
     name: "App",
-    data() {
-      return {
-        username: '',
-        email: '',
-        password: '',
-        error: '',
-        isLoading: false,
-        fullPage: true
-      }
-    },
     components: {
-      Loading
+      LoginForm
     },
-    computed: {
-      ...mapState('login', [
-        'loggingIn',
-        'loginError',
-        'accessToken'
-      ])
-    },
-    methods: {
-      ...mapActions('login', [
-        'doLogin'
-      ]),
-      loginSubmit() {
-        this.isLoading = true;
-        setTimeout(() => {
-          this.isLoading = false
-          this.$router.push('/');
-        }, 3000)
-        this.doLogin({
-          username: this.username,
-          email: this.email,
-          password: this.password
-        });
-      }
-    }
   }
 </script>
 <style>
