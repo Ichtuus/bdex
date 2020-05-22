@@ -1,5 +1,5 @@
 <template>
-    <div>
+<div>
     <header class="header">
         <nav class="navbar navbar-expand-lg">
             <div class="search-panel">
@@ -15,16 +15,24 @@
             </div>
             <div class="container-fluid d-flex align-items-center justify-content-between">
                 <div class="navbar-header">
-                    <!-- Navbar Header--><a href="" class="navbar-brand">
-                    <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">B</strong><strong>dex</strong></div>
-                    <div class="brand-text brand-sm"><strong class="text-primary">B</strong><strong>D</strong></div></a>
+                    <!-- Navbar Header-->
+                    <a href="" class="navbar-brand">
+                        <div class="brand-text brand-big visible text-uppercase">
+                            <strong class="text-primary">B</strong><strong>dex</strong>
+                        </div>
+                        <div class="brand-text brand-sm">
+                            <strong class="text-primary">B</strong><strong>D</strong>
+                        </div>
+                    </a>
                     <!-- Sidebar Toggle Btn-->
                     <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
                     <!-- Megamenu-->
                     <div>
                         <div class="dropdown-menu megamenu">
                             <div class="row">
-                                <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Home</strong>
+                                <div class="col-lg-6 col-md-6 pull-right">
+                                    <strong class="text-primary d-inline">G</strong>
+                                    <strong class="text-uppercase d-inline">eneral</strong>
                                     <ul class="list-unstyled mb-3">
                                         <li>
                                             <router-link
@@ -36,40 +44,41 @@
                                                 <a class="nav-link">Home</a>
                                             </router-link>
                                         </li>
+                                        <li v-if="isAuthenticated && isAdmin">
+                                            <router-link
+                                                    class="nav-item"
+                                                    tag="li"
+                                                    to="/admin"
+                                                    active-class="active">
+                                                <a class="nav-link">Administration</a>
+                                            </router-link>
+                                        </li>
                                     </ul>
                                 </div>
-                                <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Artists</strong>
+                                <div class="col-lg-6 col-md-6 pull-left">
+                                    <strong class="text-primary d-inline">I</strong>
+                                    <strong class="text-uppercase d-inline">ndex</strong>
                                     <ul class="list-unstyled mb-3">
                                         <li>
                                             <router-link
                                                     class="nav-item"
                                                     tag="li"
                                                     to="/artists"
-                                                    active-class="active"
-                                            >
+                                                    active-class="active">
                                                 <a class="nav-link">Artists</a>
                                             </router-link>
                                         </li>
-                                    </ul>
-                                </div>
-                                <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Dj</strong>
-                                    <ul class="list-unstyled mb-3">
                                         <li>
                                             <router-link
                                                     class="nav-item"
                                                     tag="li"
                                                     to="/groups"
-                                                    active-class="active"
-                                            >
+                                                    active-class="active">
                                                 <a class="nav-link">Groups</a>
                                             </router-link>
                                         </li>
-                                    </ul>
-                                </div>
-                                <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Groups</strong>
-                                    <ul class="list-unstyled mb-3">
                                         <li>
-                                            <a href="#">Sed ut perspiciatis</a>
+                                            <a href="#">DJ</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -89,23 +98,6 @@
                 <a href="#" data-toggle="dropdown" class="nav-link">
                     <i class="fa fa-ellipsis-v"></i>
                 </a>
-                <!-- Languages dropdown    -->
-                <div class="list-inline-item dropdown">
-                    <a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle">
-                        <img src="">
-                        <span class="d-none d-sm-inline-block">Langue</span>
-                    </a>
-                    <div aria-labelledby="languages" class="dropdown-menu">
-                        <a rel="nofollow" href="#" class="dropdown-item">
-                            <img src="" alt="English" class="mr-2">
-                            <span>English</span>
-                        </a>
-                        <a rel="nofollow" href="#" class="dropdown-item">
-                            <img src="" alt="French" class="mr-2">
-                            <span>French  </span>
-                        </a>
-                    </div>
-                </div>
                 <login-form/>
             </div>
         </nav>
@@ -125,50 +117,30 @@
             <!-- Sidebar Navidation Menus-->
 <!--            <span class="heading">Main</span>-->
             <ul class="list-unstyled">
-<!--                <li>-->
-<!--                    <form @submit.prevent="loginSubmit" action="/login" method="post" class="pad" ref="form">-->
-<!--                        <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>-->
-<!--                        <div v-if="loginError" class="alert alert-danger">-->
-<!--                            {{ loginError }}-->
-<!--                        </div>-->
-<!--                        <div v-if="accessToken" class="alert alert-success">-->
-<!--                            login Successful-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="exampleInputUsername">username</label>-->
-<!--                            <input type="text" v-model="username" class="form-control" id="exampleInputUsername"-->
-<!--                                   aria-describedby="usernameHelp" placeholder="Enter username">-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="exampleInputEmail1">Email address</label>-->
-<!--                            <input type="email" v-model="email" class="form-control" id="exampleInputEmail1"-->
-<!--                                   aria-describedby="emailHelp" placeholder="Enter email">-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <label for="exampleInputPassword1">Password</label>-->
-<!--                            <input type="password" v-model="password" name="password" class="form-control"-->
-<!--                                   id="exampleInputPassword1" placeholder="Password">-->
-<!--                        </div>-->
-<!--                        <button type="submit" class="btn btn-primary" v-bind:class="{ disabled: isLoading }">Log in</button>-->
-<!--                    </form>-->
-<!--                </li>-->
                 <li>
                     <router-link
                         class="nav-item"
                         tag="li"
                         to="/home"
-                        active-class="active"
-                    >
-                    <a class="nav-link">Home</a>
-                </router-link>
+                        active-class="active">
+                        <a class="nav-link">Home</a>
+                    </router-link>
+                </li>
+                <li v-if="isAuthenticated && isAdmin">
+                    <router-link
+                        class="nav-item"
+                        tag="li"
+                        to="/admin"
+                        active-class="active">
+                        <a class="nav-link">Administration</a>
+                    </router-link>
                 </li>
                 <li>
                     <router-link
                             class="nav-item"
                             tag="li"
                             to="/artists"
-                            active-class="none"
-                    >
+                            active-class="active">
                         <a class="nav-link">Artists</a>
                     </router-link>
                 </li>
@@ -177,8 +149,7 @@
                             class="nav-item"
                             tag="li"
                             to="/groups"
-                            active-class="none"
-                    >
+                            active-class="active">
                         <a class="nav-link">Groups</a>
                     </router-link>
                 </li>
@@ -208,23 +179,28 @@
         <footer class="footer">
             <div class="footer__block block no-margin-bottom">
                 <div class="container-fluid text-center">
-                    <!-- Please do not remove the backlink to us unless you support us at https://bootstrapious.com/donate. It is part of the license conditions. Thank you for understanding :)-->
                     <p class="no-margin-bottom">2019 &copy; Bdex. Design by <a href="">Bdex</a>.</p>
                 </div>
             </div>
         </footer>
     </div>
-
-    </div>
+</div>
 </template>
 
 <script>
   import LoginForm from './views/Login/LoginForm';
+  import {mapGetters} from "vuex";
 
   export default {
     name: "App",
     components: {
       LoginForm
+    },
+    computed: {
+      ...mapGetters('login', [
+        'isAuthenticated',
+          'isAdmin'
+      ]),
     },
   }
 </script>
@@ -3110,32 +3086,32 @@
 
     h1,
     .h1 {
-        font-size: 2.5rem;
+        font-size: 1.8rem;
     }
 
     h2,
     .h2 {
-        font-size: 1.7rem;
+        font-size: 1.6rem;
     }
 
     h3,
     .h3 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     h4,
     .h4 {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
     }
 
     h5,
     .h5 {
-        font-size: 1.1rem;
+        font-size: 1rem;
     }
 
     h6,
     .h6 {
-        font-size: 1rem;
+        font-size: 0.8rem;
     }
 
     .lead {
@@ -3721,6 +3697,14 @@
     .card .list-group-item {
         background: #2d3035;
         border-color: #34373d;
+    }
+
+    .pull-right {
+        text-align: right;
+    }
+
+    .pull-left {
+        text-align: left;
     }
 
 </style>
