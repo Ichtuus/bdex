@@ -3,12 +3,11 @@ import App from "./App";
 import router from "./router";
 import store from "./store";
 import axios from 'axios'
-import Artists from "./views/Artists/list/Artists";
-import Groups from "./views/Groups/list/Groups";
-import ArtistsList from "./views/Artists/list/ArtistsList";
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import VueCookies from 'vue-cookies'
+Vue.use(VueCookies)
 
 axios.defaults.withCredentials = true;
 

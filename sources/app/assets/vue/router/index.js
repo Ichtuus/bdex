@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
+const router =  new VueRouter({
   mode: "history",
   routes: [
     {
@@ -28,8 +28,47 @@ export default new VueRouter({
       component: () => import("../views/Groups/list/Groups"),
     },
     {
+      path: "/admin",
+      name: "Admin",
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import("../views/Admin/Dashboard"),
+    },
+    {
+      path: "/profile",
+      name: "Profile",
+      meta: {
+        requiresAuth: true
+      },
+      component: () => import("../views/Admin/Profile/User"),
+    },
+    {
+      path: "*",
+      name: "Logout",
+      redirect: "/"
+    },
+    {
       path: "*",
       redirect: "/"
     }
   ]
 });
+
+router.beforeEach(function(to, from, next) {
+    if (to.meta.requiresAuth) {
+      const localStore = JSON.parse(localStorage.getItem('localStore'));
+      const isLogged = localStore.login.isAuthenticated;
+      if(isLogged) {
+        next()
+      } else {
+        next({
+          name: 'Home'
+        })
+      }
+    } else {
+      next()
+    }
+})
+
+export default router;
