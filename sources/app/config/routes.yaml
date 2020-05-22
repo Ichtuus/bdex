@@ -11,10 +11,10 @@ GroupsBundle:
     resource: '../src/GroupsBundle/Controller'
     type:     annotation
 
-login:
-    path: /login
-    controller: App\SecurityBundle\Controller\SecurityController::login
-    methods: ['POST']
+AdminBundle:
+    resource: '../src/AdminBundle/Controller'
+    type:     annotation
 
-logout:
-    path: /logout
+SecurityBundle:
+    resource: '../src/SecurityBundle/Controller'
+    type:     annotation

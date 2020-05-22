@@ -34,6 +34,10 @@ services:
         resource: '../src/GroupsBundle'
         tags: ['controller.service_arguments']
 
+    App\AdminBundle\:
+        resource: '../src/AdminBundle'
+        tags: ['controller.service_arguments']
+
     App\SecurityBundle\:
         resource: '../src/SecurityBundle'
         tags:  ['controller.service_arguments']
