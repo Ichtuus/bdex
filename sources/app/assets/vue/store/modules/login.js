@@ -8,12 +8,13 @@ const AUTHENTICATING = "AUTHENTICATING";
 const AUTHENTICATING_SUCCESS = "AUTHENTICATING_SUCCESS";
 const AUTHENTICATING_ERROR = "AUTHENTICATING_ERROR";
 const PROVIDING_DATA_ON_REFRESH_SUCCESS = "PROVIDING_DATA_ON_REFRESH_SUCCESS";
+const RESTORE_LOGIN_MUTATION = "RESTORE_LOGIN_MUTATION";
 
 const state = {
     isLoading: false,
     error: null,
     isAuthenticated: false,
-    user: null
+    user: {},
 };
 
 const actions = {
@@ -29,9 +30,19 @@ const actions = {
       commit(AUTHENTICATING_SUCCESS, response.data);
       return response.data;
     } catch (error) {
-      console.log('store_error',error.response)
+      console.log('store error => on login',error.response)
       commit(AUTHENTICATING_ERROR, error.response.data.error);
     }
+  },
+  async logout({commit}) {
+    try {
+      console.log('restore state login store ')
+      await apiLogin.logout();
+      commit(RESTORE_LOGIN_MUTATION);
+    } catch (e) {
+      console.log(e)
+    }
+
   },
   onRefresh({commit}, payload) {
     commit(PROVIDING_DATA_ON_REFRESH_SUCCESS, payload);
@@ -51,11 +62,12 @@ const getters = {
   isAuthenticated(state) {
     return state.isAuthenticated;
   },
-  // hasRole(state) {
-  //   return role => {
-  //     return state.user.roles.indexOf(role) !== -1;
-  //   }
-  // }
+  user(state) {
+      return state.user;
+  },
+  isAdmin(state) {
+      return !!(state.user && state.user.roles.filter(role => role === "ROLE_ADMIN"));
+  }
 };
 
 const mutations = {
@@ -69,7 +81,11 @@ const mutations = {
     state.isLoading = false;
     state.error = null;
     state.isAuthenticated = true;
-    state.user = user;
+    state.user = {
+      username: user.username,
+      email: user.email,
+      roles: user.roles
+    };
   },
   [AUTHENTICATING_ERROR](state, error) {
     state.isLoading = false;
@@ -82,6 +98,12 @@ const mutations = {
     state.error = null;
     state.isAuthenticated = payload.isAuthenticated;
     state.user = payload.user;
+  },
+  [RESTORE_LOGIN_MUTATION](state) {
+    state.isLoading = false;
+    state.error = null;
+    state.isAuthenticated = false;
+    state.user = null;
   }
 };
 

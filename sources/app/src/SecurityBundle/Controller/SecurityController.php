@@ -2,11 +2,8 @@
 
 namespace App\SecurityBundle\Controller;
 
-use App\Entity\User;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +21,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/login", name="login")
+     * @Route("/login", name="login", methods={"POST"})
      * @return JsonResponse
      */
     public function login(): JsonResponse
@@ -42,12 +39,10 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/logout", name="logout")
-     * @throws \Exception
+     * @Route("/logout", name="logout", methods={"GET"})
      */
     public function logout()
     {
-//        return $this->redirectToRoute('home');
         throw new \Exception('should not be reached');
     }
 

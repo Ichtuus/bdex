@@ -2,6 +2,7 @@
     <div>
         <div>
             <b-form inline v-if="!isAuthenticated">
+<!--                <loading :active.sync="isLoading" :is-full-page="fullPage"></loading>-->
                 <div v-if="error" class="mb-2 mr-sm-2 mb-sm-0 alert alert-danger">
                     {{error}}
                 </div>
@@ -38,7 +39,22 @@
                 <b-button type="button" @click="loginSubmit" variant="primary">Login</b-button>
             </b-form>
             <b-form v-if="isAuthenticated">
-                <b-button type="button" href="/logout" variant="primary">Logout</b-button>
+                <router-link to="/profile">
+                    <b-button class="logout-button"
+                              type="button"
+                              href="/profile"
+                              variant="warning">
+                        Profile
+                    </b-button>
+                </router-link>
+                <router-link to="/logout">
+                    <b-button class="logout-button"
+                              type="button"
+                              @click="logoutSubmit"
+                              variant="danger">
+                        Logout
+                    </b-button>
+                </router-link>
             </b-form>
         </div>
     </div>
@@ -46,13 +62,18 @@
 
 <script>
     import {mapGetters} from "vuex";
+    import Loading from 'vue-loading-overlay';
+    import 'vue-loading-overlay/dist/vue-loading.css';
 
     export default {
+      components: {Loading},
       data() {
         return {
           username: '',
           email: '',
-          password: ''
+          password: '',
+          isLoading: false,
+          fullPage: true
         }
       },
       computed: {
@@ -74,7 +95,16 @@
           } catch (e) {
             console.log('vue_error', e)
           }
+        },
+        async logoutSubmit() {
+          await this.$store.dispatch('login/logout');
         }
       }
     }
 </script>
+<style scoped>
+    .logout-button {
+        text-decoration: none;
+        color: white;
+    }
+</style>

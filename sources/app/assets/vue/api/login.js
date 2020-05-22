@@ -7,5 +7,8 @@ export default {
       email: email,
       password: password
     });
+  },
+  logout() {
+    return axios.get("logout");
   }
 }
