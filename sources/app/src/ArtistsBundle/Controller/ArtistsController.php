@@ -54,8 +54,17 @@ class ArtistsController extends AbstractController
 
                         array_merge((array)array_push($bboyExtract, $request[$i]['results']));
                     }
+                }
+                $tv=[];
+                foreach ($bboyExtract as $t) {
+                    $tv[] = array_merge($t);
 
                 }
+                dump($tv);
+                die();
+//                $actualBBoysNumber = count($this->getDoctrine()->getRepository('App:Artists')->findAll());
+//                dump($actualArtistsNumber);die();
+
 
                 if(empty($countriesExtract) && empty($yearsExtract)) {
                     $request = $client->request(
@@ -106,25 +115,25 @@ class ArtistsController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $outputArtists = $this->getDatasArtists();
 
-        foreach ($outputArtists as $outputArtist) {
-            foreach ($outputArtist as $bboy) {
-                if (count($bboy)) {
-                    $Artists = new Artists();
-                    if (isset($bboy['title'])) {
-                        $Artists->setArtistsName($bboy['title']);
-                    }
-                    if (isset($bboy['country'])) {
-                        $Artists->setCountry($bboy['country']);
-                    }
-                    if (isset($bboy['thumbnail'])) {
-                        $Artists->setThumb($bboy['thumbnail']);
-                    }
-                    $Artists->setDateAdd(new DateTime());
-                    $em->persist($Artists);
-                    $em->flush();
-                }
-            }
-        }
+//        foreach ($outputArtists as $outputArtist) {
+//            foreach ($outputArtist as $bboy) {
+//                if (count($bboy)) {
+//                    $Artists = new Artists();
+//                    if (isset($bboy['title'])) {
+//                        $Artists->setArtistsName($bboy['title']);
+//                    }
+//                    if (isset($bboy['country'])) {
+//                        $Artists->setCountry($bboy['country']);
+//                    }
+//                    if (isset($bboy['thumbnail'])) {
+//                        $Artists->setThumb($bboy['thumbnail']);
+//                    }
+//                    $Artists->setDateAdd(new DateTime());
+//                    $em->persist($Artists);
+//                    $em->flush();
+//                }
+//            }
+//        }
 
 
         return $this->json([
