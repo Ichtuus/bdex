@@ -18,3 +18,12 @@ AdminBundle:
 SecurityBundle:
     resource: '../src/SecurityBundle/Controller'
     type:     annotation
+
+
+user_user_patch:
+    path: api/user/{id}/edit
+    methods: ['PATCH']
+    defaults:
+        _controller: App\AdminBundle\Api\Controller\UserController::editUserData
+        _api_resource_class: App\Entity\User
+        _api_collection_operation_name: user_patch
