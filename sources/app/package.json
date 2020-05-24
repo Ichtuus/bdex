@@ -9,7 +9,7 @@
     "private": true,
     "scripts": {
         "dev-server": "encore dev-server",
-        "dev-server-hot": "encore dev-server --hot --port 9000 --host app.localhost",
+        "dev-server-hot": "webpack-dev-server --mode development --config webpack.config.js --open --hot",
         "dev": "encore dev",
         "watch": "encore dev --watch",
         "build": "encore production --progress"

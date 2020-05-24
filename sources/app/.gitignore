@@ -1,4 +1,4 @@
-/.env.test
+.env.test
 /config
 ###> symfony/framework-bundle ###
 /.env.local

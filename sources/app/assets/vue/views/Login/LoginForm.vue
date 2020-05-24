@@ -39,14 +39,12 @@
                 <b-button type="button" @click="loginSubmit" variant="primary">Login</b-button>
             </b-form>
             <b-form v-if="isAuthenticated">
-                <router-link to="/profile">
-                    <b-button class="logout-button"
-                              type="button"
-                              href="/profile"
-                              variant="warning">
-                        Profile
-                    </b-button>
-                </router-link>
+                <b-button v-b-modal.user-profile-modal
+                          class="logout-button"
+                          type="button"
+                          variant="warning">
+                    Profile
+                </b-button>
                 <router-link to="/logout">
                     <b-button class="logout-button"
                               type="button"
@@ -56,6 +54,7 @@
                     </b-button>
                 </router-link>
             </b-form>
+            <user-profile-modal/>
         </div>
     </div>
 </template>
@@ -64,9 +63,10 @@
     import {mapGetters} from "vuex";
     import Loading from 'vue-loading-overlay';
     import 'vue-loading-overlay/dist/vue-loading.css';
+    import UserProfileModal from "../Admin/Profile/Modal/UserProfileModal";
 
     export default {
-      components: {Loading},
+      components: {UserProfileModal, Loading},
       data() {
         return {
           username: '',

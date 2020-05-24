@@ -26,6 +26,7 @@
                     </a>
                     <!-- Sidebar Toggle Btn-->
                     <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+                    <b-avatar size="1rem" badge="BV"></b-avatar>
                     <!-- Megamenu-->
                     <div>
                         <div class="dropdown-menu megamenu">
