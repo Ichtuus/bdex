@@ -10,7 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\AdminBundle\Repository\UserRepository")
  * @ApiResource
  */
 class User implements UserInterface
