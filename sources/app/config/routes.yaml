@@ -11,19 +11,15 @@ GroupsBundle:
     resource: '../src/GroupsBundle/Controller'
     type:     annotation
 
-AdminBundle:
-    resource: '../src/AdminBundle/Controller'
+AppAdminBundle:
+    resource: '../src/AdminBundle/App/Controller'
+    type:     annotation
+
+ApiAdminBundle:
+    resource: '../src/AdminBundle/Api/Controller'
     type:     annotation
 
 SecurityBundle:
     resource: '../src/SecurityBundle/Controller'
     type:     annotation
 
-
-user_user_patch:
-    path: api/user/{id}/edit
-    methods: ['PATCH']
-    defaults:
-        _controller: App\AdminBundle\Api\Controller\UserController::editUserData
-        _api_resource_class: App\Entity\User
-        _api_collection_operation_name: user_patch

@@ -31,10 +31,16 @@ class SecurityController extends AbstractController
             $userClone = clone $user;
             $userClone->setPassword('');
             $data = $this->serializer->serialize($userClone, JsonEncoder::FORMAT);
-            return new JsonResponse($data, Response::HTTP_OK, [], true);
+            return new JsonResponse(
+                $data,
+                Response::HTTP_OK, [],
+                true
+            );
+
         } catch (Exception $e) {
             echo 'Exception: ',  $e->getMessage(), "\n";
         }
+
         return new JsonResponse([]);
     }
 
