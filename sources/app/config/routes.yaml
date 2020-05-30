@@ -11,10 +11,15 @@ GroupsBundle:
     resource: '../src/GroupsBundle/Controller'
     type:     annotation
 
-AdminBundle:
-    resource: '../src/AdminBundle/Controller'
+AppAdminBundle:
+    resource: '../src/AdminBundle/App/Controller'
+    type:     annotation
+
+ApiAdminBundle:
+    resource: '../src/AdminBundle/Api/Controller'
     type:     annotation
 
 SecurityBundle:
     resource: '../src/SecurityBundle/Controller'
     type:     annotation
+

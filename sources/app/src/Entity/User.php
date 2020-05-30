@@ -2,11 +2,16 @@
 
 namespace App\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use ApiPlatform\Core\Annotation\ApiResource;
+
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Entity(repositoryClass="App\AdminBundle\Repository\UserRepository")
+ * @ApiResource
  */
 class User implements UserInterface
 {
@@ -38,20 +43,140 @@ class User implements UserInterface
      */
     private $password;
 
+    /**
+     * @ORM\Column(type="string", length=250, unique=false, nullable=true)
+     */
+    private $adress;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", unique=false, nullable=true)
+     */
+    private $birthday;
+
+    /**
+     * @var bool
+     * @ORM\Column(type="boolean")
+     */
+    private $status = false;
+
+    /**
+     * @var string
+     * @ORM\Column(type="string", length=250, unique=true, nullable=true)
+     */
+    private $image;
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->birthday = new DateTime();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    /**
+     * @param string $image
+     *
+     * @return $this
+     */
+    public function setImage(string $image): self
+    {
+
+        $this->image = $image;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
     public function getUsername(): ?string
     {
         return $this->username;
     }
 
+    /**
+     * @param string $username
+     *
+     * @return $this
+     */
     public function setUsername(string $username): self
     {
         $this->username = $username;
 
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAdress(): ?string
+    {
+        return $this->adress;
+    }
+
+    /**
+     * @param string $adress
+     *
+     * @return $this
+     */
+    public function setAdress(string $adress): self
+    {
+        $this->adress = $adress;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBirthday(): ?string
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * @param string $birthday
+     *
+     * @return $this
+     */
+    public function setBirthday(string $birthday): self
+    {
+        $this->birthday = $birthday;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * @param $status
+     *
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
         return $this;
     }
 
@@ -66,16 +191,6 @@ class User implements UserInterface
 
         return $this;
     }
-
-//    /**
-//     * A visual identifier that represents this user.
-//     *
-//     * @see UserInterface
-//     */
-//    public function getUsername(): string
-//    {
-//        return (string) $this->email;
-//    }
 
     /**
      * @see UserInterface
@@ -101,7 +216,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
