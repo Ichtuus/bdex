@@ -26,7 +26,6 @@
                     </a>
                     <!-- Sidebar Toggle Btn-->
                     <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
-                    <b-avatar size="1rem" badge="BV"></b-avatar>
                     <!-- Megamenu-->
                     <div>
                         <div class="dropdown-menu megamenu">
@@ -1215,7 +1214,7 @@
     .statistic-block strong {
         text-transform: uppercase;
         letter-spacing: 0.1em;
-        font-size: 0.9rem;
+        font-size: 1.3rem;
         color: #8a8d93;
         margin-bottom: 5px;
     }

@@ -9,12 +9,18 @@ const AUTHENTICATING_SUCCESS = "AUTHENTICATING_SUCCESS";
 const AUTHENTICATING_ERROR = "AUTHENTICATING_ERROR";
 const PROVIDING_DATA_ON_REFRESH_SUCCESS = "PROVIDING_DATA_ON_REFRESH_SUCCESS";
 const RESTORE_LOGIN_MUTATION = "RESTORE_LOGIN_MUTATION";
+const UPDATE_USER_KEY_INFO = "UPDATE_USER_KEY_INFO";
 
 const state = {
     isLoading: false,
     error: null,
     isAuthenticated: false,
-    user: {},
+    user: {
+      username: '',
+      adress: '',
+      birthday: '',
+      image: ''
+    },
 };
 
 const actions = {
@@ -46,6 +52,30 @@ const actions = {
   },
   onRefresh({commit}, payload) {
     commit(PROVIDING_DATA_ON_REFRESH_SUCCESS, payload);
+  },
+  async editUserKey({commit, getters}, {key, value}) {
+
+    let data = {};
+    if(key === "username") {
+      data = {"username": value};
+    }
+    if(key === "adress") {
+      data = {"adress": value};
+    }
+    if(key === "birthday") {
+      data = {"birthday": value};
+    }
+    if(key === "image") {
+      data = {"image": value};
+    }
+
+    try {
+      await apiLogin.patchUserData({id: getters.userId}, data);
+      commit(UPDATE_USER_KEY_INFO, {key, value})
+    } catch (e) {
+      console.log(e)
+    }
+
   }
 };
 
@@ -65,6 +95,9 @@ const getters = {
   user(state) {
       return state.user;
   },
+  userId(state) {
+    return state.user.id;
+  },
   isAdmin(state) {
       return !!(state.user && state.user.roles.filter(role => role === "ROLE_ADMIN"));
   }
@@ -82,7 +115,11 @@ const mutations = {
     state.error = null;
     state.isAuthenticated = true;
     state.user = {
+      id: user.id,
       username: user.username,
+      adress: user.adress,
+      birthday: user.birthday,
+      image: user.image,
       email: user.email,
       roles: user.roles
     };
@@ -104,7 +141,10 @@ const mutations = {
     state.error = null;
     state.isAuthenticated = false;
     state.user = null;
-  }
+  },
+   [UPDATE_USER_KEY_INFO](state, {key, value}) {
+     state.user[key] = value;
+   },
 };
 
 export default {

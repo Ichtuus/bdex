@@ -1,7 +1,11 @@
 <template>
     <basic-portlet>
         <template #title>
-            <h2 class="d-inline">Manage you're {{user.username}} -
+            <h2 class="d-inline">
+                <router-link :to="{ name : 'Profile' }">
+                    <b-avatar size="2rem" badge="BV"></b-avatar>
+                </router-link>
+                Manage you're {{user.username}} -
                 <span class="d-inline brand-text brand-big visible text-uppercase">
                     <strong class="text-primary d-inline">B</strong><strong class="d-inline">dex</strong>
                 </span>
@@ -94,6 +98,10 @@
 
     .inline-span {
         display: inline;
+    }
+
+    .user-profile {
+        cursor: pointer;
     }
 
     .statistic-block strong {
