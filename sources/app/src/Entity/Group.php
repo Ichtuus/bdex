@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -28,7 +30,7 @@ class Group
     /**
      * @ORM\Column(type="string", length=300)
      */
-    private $title;
+    private $groupName;
 
     /**
      * @ORM\Column(type="string", length=3, nullable=true)
@@ -46,6 +48,15 @@ class Group
      */
     private $thumb;
 
+    /**
+     * Group constructor.
+     */
+    public function __construct()
+    {
+        $this->dateAdd = new DateTime();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -54,19 +65,19 @@ class Group
     /**
      * @return string|null
      */
-    public function getTitle(): ?string
+    public function getGroupName(): ?string
     {
-        return $this->title;
+        return $this->groupName;
     }
 
     /**
-     * @param string $title
+     * @param string $groupName
      *
      * @return $this
      */
-    public function setTitle(string $title): self
+    public function setGroupName(string $groupName): self
     {
-        $this->title = $title;
+        $this->groupName = $groupName;
 
         return $this;
     }
@@ -99,6 +110,11 @@ class Group
         return $this->thumb;
     }
 
+    /**
+     * @param string|null $thumb
+     *
+     * @return $this
+     */
     public function setThumb(?string $thumb): self
     {
         $this->thumb = $thumb;
@@ -107,19 +123,19 @@ class Group
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return DateTime|null
      */
-    public function getDateAdd(): ?\DateTimeInterface
+    public function getDateAdd(): ?DateTime
     {
         return $this->dateAdd;
     }
 
     /**
-     * @param \DateTimeInterface $dateAdd
+     * @param DateTime $dateAdd
      *
      * @return $this
      */
-    public function setDateAdd(\DateTimeInterface $dateAdd): self
+    public function setDateAdd(DateTime $dateAdd): self
     {
         $this->dateAdd = $dateAdd;
 

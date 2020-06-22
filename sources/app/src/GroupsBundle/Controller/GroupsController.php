@@ -3,7 +3,12 @@
 namespace App\GroupsBundle\Controller;
 
 use DateTime;
+use Doctrine\DBAL\DBALException;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\ORMException;
 use GuzzleHttp\Exception\RequestException;
+use PDOException;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +21,13 @@ use App\Entity\Group;
 
 class GroupsController extends AbstractController
 {
-    private $group, $pages, $url;
+    private $group, $pages, $url, $em;
+
+    public function __construct(
+        EntityManagerInterface $em
+    ) {
+        $this->em = $em;
+    }
 
     /**
      * @Route("/groups", name="groups_list", options={"expose": true})
@@ -47,6 +58,7 @@ class GroupsController extends AbstractController
                             'GET',
                             $this->url = 'https://bboyrankingz.com/ranking/groups/2020/elo.json?page=' . $nbOfPages
                         )->toArray();
+
                         array_merge((array)array_push($groupExtract, $request[$i]['results']));
                     }
                 }
@@ -87,42 +99,41 @@ class GroupsController extends AbstractController
      */
     public function getAll()
     {
-        $em = $this->getDoctrine()->getManager();
         $outputGroups = $this->getDatasGroups();
-        foreach ($outputGroups as $outputGroup) {
-            foreach ($outputGroup as $group) {
-                $Group = new Group();
-                if (count($group)) {
-                    if (isset($group['title'])) {
-                        $Group->setTitle($group['title']);
-                    }
-                    if (isset($group['country'])) {
-                        $Group->setCountry($group['country']);
-                    }
-                    if (isset($group['thumbnail'])) {
-                        $Group->setThumb($group['thumbnail']);
-                    }
-                    $Group->setDateAdd(new DateTime());
-//                    $em->detach();
-                    $em->persist($Group);
-                    $em->flush();
-                }
-            }
-        }
 
-        return $this->json([
-            'crew' => $this->getDatasGroups(),
-        ]);
+        foreach ($outputGroups as $outputGroup) {
+           $insert = array_map(function($group){
+               $Group = new Group();
+               $Group->setGroupName($group['title']);
+               $Group->setCountry($group['country']);
+               $Group->setThumb($group['thumbnail']);
+               $Group->setDateAdd(new DateTime());
+               $this->em->persist($Group);
+               $this->em->flush();
+            }, $outputGroup);
+        }
+//        return $this->json([
+//            'crew' => $this->getDatasGroups(),
+//        ]);
     }
 
     public function getDatasGroups()
     {
         try {
-            $apiContent = (array)$this->call();
+            $apiContent = (array) $this->call();
         } catch (RequestException $e) {
             return 'error';
         }
 
         return $this->group = $apiContent['crew'];
+    }
+
+    protected function createNewEntityManager() {
+
+        return $this->em->create(
+            $this->em->getConnection(),
+            $this->em->getConfiguration(),
+            $this->em->getEventManager()
+        );
     }
 }

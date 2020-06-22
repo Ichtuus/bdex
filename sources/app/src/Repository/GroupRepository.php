@@ -19,6 +19,11 @@ class GroupRepository extends ServiceEntityRepository
         parent::__construct($registry, Group::class);
     }
 
+    public function insertGroups($data)
+    {
+//        return $this-
+    }
+
     // /**
     //  * @return Group[] Returns an array of Group objects
     //  */
